@@ -11,32 +11,49 @@
 }
 #plaintext {
   width: 100%;
-  height: 100%;
+  height: 97vh;
   padding: .5em;
   border: 0;
   margin: 0;
   resize: none;
-  color: #eeeeee;
-  background: #000000;
-}
-body.invert #plaintext {
   color: #000000;
   background: #eeeeee;
+    
+}
+
+#opal {
+  width: 100%;
+  height: 97vh;  
+  border: 0;
+  margin: 0;
+  padding: .5em;
+  resize: none;
+  overflow-y: scroll;    
+  overflow-x: auto;    
+}
+
+#preformat{  
+  margin: 0;
+}
+
+body.invert #plaintext {
+  color: #eeeeee;
+  background: #000000;  
 }
 #plaintext-wrapper {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  bottom: 2em;
+  bottom: 2em;  
 }
 #nav {
   position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
-  height: 2em;
-  line-height: 2em;
+  height: 3vh;
+  line-height: 3vh;
   text-align: right;
   vertical-align: middle;
   background: #333333;
@@ -75,7 +92,9 @@ body.invert #nav a:hover {
 #nav.text-offer .nav-default { display:none; }
 #nav.text-offer .nav-text-offer { display:inline; }
 </style>
+<link id="code-highlight" rel="stylesheet" href="highlightjs-styles/solarized-light.css">
 <script src="lzma.js"></script>
+<script src="highlight.pack.js"></script>
 <script>
 var matches;
 var lzma = new LZMA("lzma_worker.js");
@@ -86,6 +105,7 @@ document.addEventListener('DOMContentLoaded', function(){
   if (matches = /(?:^|\;)invert\=([01])(?:\;|$)/.exec(document.cookie)) {
     if (matches[1] === '1') {
       document.body.classList.add("invert");
+      document.getElementById('code-highlight').href='highlightjs-styles/solarized-dark.css';
     }
   }
 
@@ -107,7 +127,15 @@ document.addEventListener('DOMContentLoaded', function(){
           return;
         }
 
-        document.getElementById("plaintext").value = plaintext;
+        document.getElementById("plaintext").textContent  = plaintext;
+        document.getElementById("opal").textContent  = plaintext;
+        
+        document.getElementById("plaintext").hidden= true;
+
+        document.querySelectorAll('#opal').forEach((block) => {
+          hljs.highlightBlock(block);
+        });
+        
       });
     };
     reader.readAsArrayBuffer(blob);
@@ -159,11 +187,40 @@ function invert() {
   var pref = document.body.classList.contains("invert") ? 0 : 1;
   document.cookie = "invert="+pref+";max-age=63072000";
   document.body.classList[pref?"add":"remove"]("invert");
+
+  var cssE = document.getElementById('code-highlight')
+  if(pref == 0)
+  {
+    cssE.href='highlightjs-styles/solarized-light.css';
+    
+  }else{
+    cssE.href='highlightjs-styles/solarized-dark.css';
+  }
+  
 }
+
+function edit() {
+  var plainText = document.getElementById("plaintext");
+  var opal = document.getElementById("opal");
+  
+  plainText.style.display = "block";
+  opal.style.display = "none";
+
+    
+  var editbutton = document.getElementById("editToggle");
+  editbutton.style.display = "none";
+
+}
+
 </script>
 </head>
 <body>
-<div id="plaintext-wrapper"><textarea id="plaintext" spellcheck="false"></textarea></div>
-<div id="nav"><span class="nav-default"><a class="nav-left" href="https://github.com/topaz/paste">[github]</a><a class="nav-left" onclick="invert()">[invert colors]</a><a onclick="url_generate('raw')">[generate url]</a><a onclick="url_generate('markdown')">[generate markdown link]</a></span><span class="nav-text-offer"><input id="text-offer-value"/><a onclick="text_offer_copy()">[copy]</a><a onclick="text_offer_cancel()">[cancel]</a></span></div>
+<div id="plaintext-wrapper">
+  <textarea id="plaintext" spellcheck="false"></textarea>
+  <pre id="preformat"><code id="opal" spellcheck="false"></code></pre>
+</div>
+
+<div id="nav"><span class="nav-default"><a id="editToggle" class="nav-left" onclick="edit()">[edit]</a><a class="nav-left" href="https://github.com/topaz/paste">[github]</a><a class="nav-left" onclick="invert()">[invert colors]</a><a onclick="url_generate('raw')">[url]</a><a onclick="url_generate('markdown')">[markdown link]</a></span><span class="nav-text-offer"><input id="text-offer-value"/><a onclick="text_offer_copy()">[copy]</a><a onclick="text_offer_cancel()">[cancel]</a></span></div>
 </body>
 </html>
+
