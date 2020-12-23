@@ -6,6 +6,8 @@
 // @author       Tzarnal
 // @match        https://topaz.github.io/paste/
 // @grant        none
+// @updateURL    https://github.com/Tzarnal/Opal/raw/master/Topaz%20to%20Opal%20Redirect.user.js
+// @downloadURL  https://github.com/Tzarnal/Opal/raw/master/Topaz%20to%20Opal%20Redirect.user.js
 // ==/UserScript==
 
 (function() {
