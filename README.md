@@ -2,7 +2,7 @@ Try it here: https://tzarnal.github.io/Opal/
 
 This is a no-datastore, client-side paste service with syntax highlighting.  It turns text into [LZMA](https://en.wikipedia.org/wiki/Lempel%E2%80%93Ziv%E2%80%93Markov_chain_algorithm)-compressed, [Base64](https://en.wikipedia.org/wiki/Base64)-encoded URLs.
 
-The is a fork of the original [Topaz](https://github.com/topaz/paste) with syntax highlighting added
+The is a fork of the original [Topaz Paste](https://github.com/topaz/paste) with syntax highlighting added
 
 For those who wish to syntax highlight original existing Topaz links this [userscript](https://github.com/Tzarnal/Opal/raw/master/Topaz%20to%20Opal%20Redirect.user.js) will automatically redirect Topaz to Opal.
 
